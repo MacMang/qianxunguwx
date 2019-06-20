@@ -7,19 +7,41 @@
       <view class="statuBar"></view>
       <view class="navBar">
           <view class="CancelText" bindtap="closeCalendar">X</view>
-          <view class="calendarIcon">
+          <view class="calendarIcon" bindtap="showDaliyList">
               <image src="../../images/calendarIcon.png" style="width:40rpx;height:40rpx"></image>
           </view>
           <view></view>
       </view>
   </view>
+ <view class="dailyList {{actvieDailyList}}">
+     <view class="statuBar"></view>
+     <view class="titleBar">
+         <text style="fonnt-size:48rpx;padding-left:40rpx;color:gray" bindtap="closeDailyList">X</text>
+         <text style="font-weight:bolder;text-align:center">6月</text>
+         <text></text>
+     </view>
+     <view class="daily-bar">
+         <swiper style="height:100%" bindchange="swiperTransition" current="{{currentWeek}}">
+             <block wx:for="{{weeks}}" wx:for-index="weeksIndex" wx:for-item="days" >
+                 <!-- 这是外层的swiper -->
+                 <swiper-item style="display: flex;">
+                     <!-- 遍历 -->
+                    <view wx:for="{{days}}" class="day">
+                       <view style="font-size:22rpx">{{weekDays[index]}}</view>
+                        <view class="dateCircle" style="background:lightgray url({{baseURL+weekDaysImgUrls[weeksIndex][index].imgURL}}) no-repeat center;background-size:auto 100%;" data-index="{{index}}" bindtap="changeCurrentImg">{{filter.filterDate(item)}}</view>
+                    </view>
+                 </swiper-item>
+             </block>
+         </swiper>
+     </view>
+ </view>
   <!-- 轮播图 -->
   <swiper indicator-dots="{{indicatorDots}}"
     autoplay="{{autoplay}}"
    interval="{{interval}}"
    duration="{{duration}}"
-   current="{{imgUrls.length-1}}"
-   style="width:100%;height:100%"
+   current="{{current}}"
+   class="swiper {{activeSwiper}}"
    >
   <block wx:for="{{imgUrls}}" wx:key="{{item._id}}">
     <swiper-item>

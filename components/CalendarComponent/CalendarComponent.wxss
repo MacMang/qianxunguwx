@@ -63,7 +63,7 @@
 }
 
 .descriptionView-transition,.topBar-transition {
-    transition: all 2s;
+    transition: all 1s;
 }
 
 .descriptionView-show,.topBar-show{
@@ -91,3 +91,67 @@
     justify-content:center;
     align-items:center;
 }
+
+/* 日期列表 */
+.dailyList {
+    position: fixed;
+    z-index: 1001;
+    width: 100%;
+    height: 280rpx;
+    background: white;
+    transform: translateY(-280rpx);
+  }
+
+.dailyList-transition,.swiper-transition{
+    transition: all 500ms;
+}
+.daily-show {
+    opacity: 1;
+    transform: translateY(0)
+}
+.titleBar {
+    width: 100%;
+    height: 64rpx;
+    display: flex;
+    flex-direction: row;
+}
+.titleBar>text{
+    flex:1;
+}
+.daily-bar{
+    width: 100%;
+    height: 150rpx;
+}
+
+.dayList{
+    display: flex;   
+}
+.day{
+    flex:1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color:gray;
+}
+.dateCircle{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px;
+    background: rgb(159, 159, 157);
+    color: white;
+    margin-top: 10px;
+    font-size: 24rpx;
+}
+/* 轮播图 */
+.swiper{
+    width: 100%;
+    height: 100%;
+}
+.swiper-translate{
+    transform: translateY(280rpx)
+}
+

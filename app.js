@@ -1,9 +1,8 @@
 //app.js
+
+
 App({
   onLaunch: function () {
-   
-  },
-  globalData: {
-    userInfo: null
-  }
+    let that = this
+  } 
 })

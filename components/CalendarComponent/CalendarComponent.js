@@ -1,6 +1,7 @@
-// components/CalendarComponent/CalendarComponent.js
+import regeneratorRuntime from '../../utils/runtime'
 import {dailyBGURL,baseURL} from '../../apis/index'
-import {formatTime,getWeek} from '../../utils/util'
+import {formatTime,getWeek,wxRequest} from '../../utils/util'
+
 Component({
   /**
    * 组件的属性列表
@@ -18,31 +19,43 @@ Component({
     imgUrls: [],
     indicatorDots: false,
     autoplay: false,
-    interval: 5000,
-    duration: 1000,
+    interval: 3000,
+    duration: 500,
+    current:0,
     activeDescView: "",//文字视图的样式
     activeTopBar:"",
+    actvieDailyList:"",
+    activeSwiper:"",
+    weeks: [],
+    weekDays:["S","M","T","W","T","F","S"],
+    currentWeek:0,
+    weekDaysImgUrls: []
   },
   lifetimes:{
-    attached(){
+    async attached(){
       const _this = this;
       var rs = getWeek(0);
-      wx.request({
-        url:dailyBGURL,
-        data:{
-          from:rs[0],
-          to:rs[rs.length-1]
-        },
-        success:function(resp){
-          _this.setData({
-            imgUrls: resp.data.data
-          })
-        }
+      // weeks.unshift(rs);
+      var arr = this.data.weeks;
+      arr.unshift(rs);
+      arr.unshift(getWeek(-1))
+      this.setData({
+        weeks: arr,
+        currentWeek:arr.length-1
       })
+      var params = {
+        from:getWeek(-1)[0],
+        to: rs[rs.length-1]
+      }
+      var rs = await wxRequest(dailyBGURL,params).then((resp)=>{
+        return resp.data;
+      })
+      console.log("结果",rs);
       setTimeout(function(){
         _this.setData({
           activeStyle: "opacity:1",
-          activeDescView:"descriptionView-transition descriptionView-show"
+          activeDescView:"descriptionView-transition descriptionView-show",
+          current:_this.data.imgUrls.length-1
         })
       },3000)
     }
@@ -57,11 +70,10 @@ Component({
             _this.setData({
               activeDescView:"descriptionView-transition"
             })
-          },3000)
+          },2000)
       }
     },
     showDesc(newValue){
-        console.log("数据发生变化");
         if(newValue){
           this.setData({
             activeDescView:"descriptionView-transition descriptionView-show",
@@ -83,11 +95,54 @@ Component({
     transitionend(){
     
     },
+   
     // 点击x的时候回maskView中
     closeCalendar(){
       this.triggerEvent("showMaskView");
       this.setData({
         showDesc:false
+      })
+    },
+    // 显示头部的日期列表
+    /**
+     * 从上往下滑动,图片也跟着滑动
+     */
+    showDaliyList(){
+        this.setData({
+          actvieDailyList:"dailyList-transition daily-show",
+          activeSwiper:"swiper-transition swiper-translate"
+        })
+    },
+    swiperTransition(ev){
+      
+      if(ev.detail.current!=0){
+        return;
+      }
+      /**
+       * 滑动的时候如果current不等于0,则需要再次发起请求,将请求到的数据放入到
+       * weekDaysImgUrls数组中,在视图dailyList中的图片就从这里来
+       *  */ 
+      // 如果current等于0,再获取往前一周的时间getWeek
+      // 由于ev.detail.current为0,
+      wxRequest()
+      var weeks = this.data.weeks;
+      var rs = getWeek(-weeks.length);
+      weeks.unshift(rs);
+      this.setData({
+        weeks:weeks,
+        currentWeek:ev.detail.current+1
+      })
+    },
+    changeCurrentImg(ev){
+      var index = ev.currentTarget.dataset.index;
+      this.setData({
+        current:index
+      })
+    },
+    closeDailyList(){
+      this.setData({
+        actvieDailyList:"dailyList-transition",
+        activeSwiper:"swiper-transition"
       })
     }
   }

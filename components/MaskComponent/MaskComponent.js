@@ -37,6 +37,11 @@ Component({
       if(this.data.activeClass=="mask-transition"){
           this.triggerEvent("hideMaskView")
       }
+    },
+    startPlay(){
+      wx.navigateTo({
+        url: "../music/music",
+      })
     }
   }
 })

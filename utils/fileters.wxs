@@ -3,7 +3,11 @@ var filterTime = function(daily){
     var date = getDate(parseInt(daily));
     return date.toDateString().split(" ")
 }
-
+var filterDate = function(dateStr){
+    var date = getDate(dateStr);
+    return date.getDate()
+}
 module.exports = {
-    filterTime:filterTime
+    filterTime:filterTime,
+    filterDate:filterDate
 }

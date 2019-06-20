@@ -17,10 +17,8 @@ Component({
   // 组件生命周期钩子函数
   lifetimes: {
     created(){
-      console.log("组件被创建了");
     },
     attached:function(){
-      console.log("触发钩子函数");
       const _this = this;
       setTimeout(function(){
         _this.setData({
@@ -34,10 +32,8 @@ Component({
    */
   methods: {
     animationstart(){
-      console.log("动画开始");
     },
     animationend(){
-      console.log("动画结束");
       const _this = this;
       if(this.data.activeClass=="logo-leave-animation"){
         _this.setData({

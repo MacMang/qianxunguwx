@@ -4,5 +4,14 @@
      bindtransitionend="transitionend"
      >
     <view class="maskTop"></view>
-    <view class="maskBottom"></view>
+    <view class='maskBottom'>
+          <view class="playBtnView">
+        <!-- 阻止事件冒泡 catchtap -->
+        <view class="playBTN" catchtap="startPlay">
+          <view class="arrow-right"></view>
+          <view>开始睡眠</view>
+        </view>
+      </view>
+      <view class="playList" catchtap="handleView"></view>
+ </view>
 </view>
