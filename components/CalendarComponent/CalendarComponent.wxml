@@ -28,7 +28,7 @@
                      <!-- 遍历 -->
                     <view wx:for="{{days}}" class="day">
                        <view style="font-size:22rpx">{{weekDays[index]}}</view>
-                        <view class="dateCircle" style="background:lightgray url({{baseURL+weekDaysImgUrls[weeksIndex][index].imgURL}}) no-repeat center;background-size:auto 100%;" data-index="{{index}}" bindtap="changeCurrentImg">{{filter.filterDate(item)}}</view>
+                        <view class="dateCircle" style="background:lightgray url({{baseURL+weekDaysImgUrls[weeksIndex-1][index].imgURL}}) no-repeat center;background-size:auto 100%;" data-index="{{index}}" bindtap="changeCurrentImg">{{filter.filterDate(item)}}</view>
                     </view>
                  </swiper-item>
              </block>

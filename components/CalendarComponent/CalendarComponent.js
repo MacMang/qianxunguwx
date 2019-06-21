@@ -44,13 +44,20 @@ Component({
         currentWeek:arr.length-1
       })
       var params = {
-        from:getWeek(-1)[0],
-        to: rs[rs.length-1]
+        data:{
+          from:rs[0],
+          to: rs[rs.length-1]
+        }
       }
       var rs = await wxRequest(dailyBGURL,params).then((resp)=>{
         return resp.data;
       })
-      console.log("结果",rs);
+      var weekDaysImgUrls = this.data.weekDaysImgUrls;
+      weekDaysImgUrls[0] = rs;
+      this.setData({
+        imgUrls:weekDaysImgUrls[0],
+        weekDaysImgUrls:weekDaysImgUrls
+      })
       setTimeout(function(){
         _this.setData({
           activeStyle: "opacity:1",
@@ -113,9 +120,40 @@ Component({
           activeSwiper:"swiper-transition swiper-translate"
         })
     },
-    swiperTransition(ev){
+    async swiperTransition(ev){
+      var weeks = this.data.weeks;
+      var weekDaysImgUrls = this.data.weekDaysImgUrls;
+      var imgUrls = this.data.imgUrls;
       
+      if(ev.detail.source==""){
+        var params = {
+          data: {
+            from:weeks[1][0],
+            to:weeks[1][6]
+          }
+        }
+        var preWeek = await wxRequest(dailyBGURL,params).then((resp)=>{
+          return resp.data;
+        })
+        // 获取该周没有图片的日期长度
+        var length = 7-preWeek.length;
+        var arr = new Array(length).map(function(_,index){
+          return index;
+        })
+        preWeek = [...arr,...preWeek];
+        weekDaysImgUrls.unshift(preWeek);
+        imgUrls = weekDaysImgUrls[0]
+        this.setData({
+          weekDaysImgUrls:weekDaysImgUrls,
+          imgUrls:imgUrls
+        })
+      }
       if(ev.detail.current!=0){
+        imgUrls = weekDaysImgUrls[ev.detail.current-1];
+        this.setData({
+          imgUrls:imgUrls,
+          current:6
+        })
         return;
       }
       /**
@@ -124,8 +162,6 @@ Component({
        *  */ 
       // 如果current等于0,再获取往前一周的时间getWeek
       // 由于ev.detail.current为0,
-      wxRequest()
-      var weeks = this.data.weeks;
       var rs = getWeek(-weeks.length);
       weeks.unshift(rs);
       this.setData({
