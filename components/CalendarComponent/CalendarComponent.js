@@ -1,7 +1,12 @@
 import regeneratorRuntime from '../../utils/runtime'
 import {dailyBGURL,baseURL} from '../../apis/index'
 import {formatTime,getWeek,wxRequest} from '../../utils/util'
-
+var touchStartX = 0;//触摸时的原点  
+var touchStartY = 0;//触摸时的原点  
+var time = 0;// 时间记录，用于滑动时且时间小于1s则执行左右滑动  
+var interval = "";// 记录/清理时间记录  
+var touchMoveX = 0; // x轴方向移动的距离
+var touchMoveY = 0; // y轴方向移动的距离
 Component({
   /**
    * 组件的属性列表
@@ -172,8 +177,45 @@ Component({
     changeCurrentImg(ev){
       var index = ev.currentTarget.dataset.index;
       this.setData({
-        current:index
+        current:index,
+        duration:0
       })
+    },
+    touchStart: function (e) {
+      console.log("手指开始移动");
+      touchStartX = e.touches[0].pageX; // 获取触摸时的原点  
+      touchStartY = e.touches[0].pageY; // 获取触摸时的原点  
+      // 使用js计时器记录时间    
+      interval = setInterval(function () {
+        time++;
+      }, 100);
+    },
+    // 触摸移动事件  
+    touchMove: function (e) {
+      console.log("手指移动");
+      touchMoveX = e.touches[0].pageX;
+      touchMoveY = e.touches[0].pageY;
+    },
+    touchEnd: function (e) {
+      console.log("手指一动结束");
+      var moveX = touchMoveX - touchStartX;
+      var moveY = touchMoveY - touchStartY;
+      if (Math.sign(moveX) == -1) {
+        moveX = moveX * -1
+      }
+      if (Math.sign(moveY) == -1) {
+        moveY = moveY * -1
+      }
+      if (moveX <= moveY) {
+        // 向上滑动
+        if (touchMoveY - touchStartY <= -30 && time < 10) {
+          console.log("向上滑动")
+        }
+        // 向下滑动  
+        if (touchMoveY - touchStartY >= 30 && time < 10) {
+          console.log('向下滑动 ');
+        }
+      }
     },
     closeDailyList(){
       this.setData({

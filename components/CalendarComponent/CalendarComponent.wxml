@@ -25,10 +25,17 @@
              <block wx:for="{{weeks}}" wx:for-index="weeksIndex" wx:for-item="days" >
                  <!-- 这是外层的swiper -->
                  <swiper-item style="display: flex;">
-                     <!-- 遍历 -->
+                     <!-- 遍历 
+                        加动画
+                     -->
                     <view wx:for="{{days}}" class="day">
                        <view style="font-size:22rpx">{{weekDays[index]}}</view>
-                        <view class="dateCircle" style="background:lightgray url({{baseURL+weekDaysImgUrls[weeksIndex-1][index].imgURL}}) no-repeat center;background-size:auto 100%;" data-index="{{index}}" bindtap="changeCurrentImg">{{filter.filterDate(item)}}</view>
+                        <view class="dateCircle" 
+                            style="background:lightgray url({{baseURL+weekDaysImgUrls[weeksIndex-1][index].imgURL}}) no-repeat center;background-size:auto 100%;"
+                            data-index="{{index}}" 
+                            bindtap="changeCurrentImg">
+                            {{filter.filterDate(item)}}
+                        </view>
                     </view>
                  </swiper-item>
              </block>
@@ -41,11 +48,18 @@
    interval="{{interval}}"
    duration="{{duration}}"
    current="{{current}}"
-   class="swiper {{activeSwiper}}"
+   class="swiper {{activeSwiper}} {{activeDayClass}}"
+   bind:touchstart="startTouch"
+   bind:touchend = "touchEnd"
+   bind:touchmove="touchMove"
+   skip-hidden-item-layout=true
    >
   <block wx:for="{{imgUrls}}" wx:key="{{item._id}}">
     <swiper-item>
-        <view style="background:url({{baseURL+item.imgURL}}) no-repeat center;background-size:auto 100%;background-position-x:-60px;height:100%">
+        <view 
+            style="background:url({{baseURL+item.imgURL}}) no-repeat center;background-size:auto 100%;background-position-x:-60px;height:100%"
+           
+        >
             <view class="descriptionView {{activeDescView}}" 
             bindtransitionend="transitionend">
                 <view class="dailyView">
