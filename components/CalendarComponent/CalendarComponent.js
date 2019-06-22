@@ -122,7 +122,8 @@ Component({
     showDaliyList(){
         this.setData({
           actvieDailyList:"dailyList-transition daily-show",
-          activeSwiper:"swiper-transition swiper-translate"
+          activeSwiper:"swiper-transition swiper-translate",
+          duration:0
         })
     },
     async swiperTransition(ev){
@@ -180,11 +181,13 @@ Component({
         current:index,
         duration:0
       })
+     
     },
     touchStart: function (e) {
       console.log("手指开始移动");
       touchStartX = e.touches[0].pageX; // 获取触摸时的原点  
       touchStartY = e.touches[0].pageY; // 获取触摸时的原点  
+      console.log("move touchStartX",touchStartX,"touchStartY",touchStartY);
       // 使用js计时器记录时间    
       interval = setInterval(function () {
         time++;
@@ -192,35 +195,39 @@ Component({
     },
     // 触摸移动事件  
     touchMove: function (e) {
-      console.log("手指移动");
       touchMoveX = e.touches[0].pageX;
       touchMoveY = e.touches[0].pageY;
     },
     touchEnd: function (e) {
-      console.log("手指一动结束");
       var moveX = touchMoveX - touchStartX;
       var moveY = touchMoveY - touchStartY;
-      if (Math.sign(moveX) == -1) {
-        moveX = moveX * -1
-      }
-      if (Math.sign(moveY) == -1) {
-        moveY = moveY * -1
-      }
-      if (moveX <= moveY) {
+      // if (Math.sign(moveX) == -1) {
+      //   moveX = moveX * -1
+      // }
+      // if (Math.sign(moveY) == -1) {
+      //   moveY = moveY * -1
+      // }
+        console.log("touchMoveY - touchStart=",touchMoveY - touchStartY)
         // 向上滑动
-        if (touchMoveY - touchStartY <= -30 && time < 10) {
+        if (touchMoveY - touchStartY <= -30 ) {
           console.log("向上滑动")
+          this.closeDailyList();
         }
         // 向下滑动  
-        if (touchMoveY - touchStartY >= 30 && time < 10) {
+        if (touchMoveY - touchStartY >= 30) {
           console.log('向下滑动 ');
+          this.showDaliyList()
         }
-      }
+      // touchStartX=0;
+      // touchStartY=0;
+      // console.log("touchStartX",touchStartX,"touchStartY",touchStartY);
+
     },
     closeDailyList(){
       this.setData({
         actvieDailyList:"dailyList-transition",
-        activeSwiper:"swiper-transition"
+        activeSwiper:"swiper-transition",
+        duration:500
       })
     }
   }

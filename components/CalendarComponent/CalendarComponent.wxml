@@ -48,17 +48,16 @@
    interval="{{interval}}"
    duration="{{duration}}"
    current="{{current}}"
-   class="swiper {{activeSwiper}} {{activeDayClass}}"
-   bind:touchstart="startTouch"
+   class="swiper {{activeSwiper}} "
+   bind:touchstart="touchStart"
    bind:touchend = "touchEnd"
    bind:touchmove="touchMove"
-   skip-hidden-item-layout=true
    >
   <block wx:for="{{imgUrls}}" wx:key="{{item._id}}">
     <swiper-item>
         <view 
             style="background:url({{baseURL+item.imgURL}}) no-repeat center;background-size:auto 100%;background-position-x:-60px;height:100%"
-           
+            
         >
             <view class="descriptionView {{activeDescView}}" 
             bindtransitionend="transitionend">

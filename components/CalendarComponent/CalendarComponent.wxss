@@ -146,6 +146,18 @@
     margin-top: 10px;
     font-size: 24rpx;
 }
+.swiperView {
+    opacity: 0;
+}
+.swiperView-transition {
+    transition: all 1s;
+}
+.swiperView-show {
+    opacity: 1;
+}
+.swiperView-hide{
+    opacity: 0;
+}
 /* 轮播图 */
 .swiper{
     width: 100%;
