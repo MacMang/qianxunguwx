@@ -11,5 +11,6 @@
     "navigationStyle": "custom",
     "disableScroll": true
   },
+  "requiredBackgroundModes": ["audio"],
   "sitemapLocation": "sitemap.json"
 }

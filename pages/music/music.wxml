@@ -1,11 +1,35 @@
-<!--pages/music/music.wxml-->
-<view class='playView'>
-    <swiper  current="0" interval="5000" duration="1000" bindchange="" style="height:100%">
-        <block wx:for="{{musics}}">
+
+<view class='playView' style="{{style}}" bindtap="tapView">
+    <view class="topBar">
+        <view class="statuBar"></view>
+        <view class="navBar">
+          <view class="CancelText" bindtap="closePlayView">X</view>
+          <view class="radios" >
+                <view class="radiosIcon" style="background:rgba(0,0,0,0) url(../../images/radios.png) no-repeat center;background-size:auto 70%;">
+                </view>
+          </view>
+          <view></view>
+          <view></view>
+        </view>
+    </view>
+    <swiper  current="0" 
+            interval="5000" 
+            duration="500" 
+            class="playSwiper" 
+            bindchange="changeMusic"
+            >
+        <block wx:for="{{musics}}" wx:for-index="musicIndex" wx:for-item="music">
             <swiper-item>
-                <video src="{{baseURL+item.address}}" controls style="width:100%;height:100%;opacity:0"></video>
-                <button bindtap="play">play</button>
+                <view style="font-size:30px;height:100%;background:rgba({{backgroundColors[musicIndex]}})">
+
+                </view>
             </swiper-item>
         </block>
     </swiper>
+    <view class="playBTNView" catchtap="startPlay">
+        {{musicTitle}}
+    </view>
+    <view class="transitionBall transition-ball">
+        eye
+    </view>
 </view>
