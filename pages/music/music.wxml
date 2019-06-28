@@ -1,11 +1,25 @@
 
-<view class='playView' style="{{style}}" bindtap="tapView">
+<view class='playView' style="{{style}}">
+    <view class="musicList {{musicListStyle}}" 
+        bindtap="closeMusiceList"
+        bindtransitionend="transitionEnd"
+        >
+        <view class="statuBar"></view>
+         <scroll-view class="scroll-view_H" scroll-x scroll-left="300">
+             <block wx:for="{{musics}}" wx:for-index="musicIndex" wx:for-item="music">
+                <view class="scroll-view-item" style="background:url({{baseURL+music.icon}}) no-repeat center;background-size:auto 100%;">
+                </view>
+            </block>
+         </scroll-view>
+    </view>
     <view class="topBar">
         <view class="statuBar"></view>
         <view class="navBar">
           <view class="CancelText" bindtap="closePlayView">X</view>
           <view class="radios" >
-                <view class="radiosIcon" style="background:rgba(0,0,0,0) url(../../images/radios.png) no-repeat center;background-size:auto 70%;">
+                <view class="radiosIcon" style="background:rgba(0,0,0,0) url(../../images/radios.png) no-repeat center;background-size:auto 70%;"
+                bindtap="showMusicList"
+                >
                 </view>
           </view>
           <view></view>
@@ -20,9 +34,7 @@
             >
         <block wx:for="{{musics}}" wx:for-index="musicIndex" wx:for-item="music">
             <swiper-item>
-                <view style="font-size:30px;height:100%;background:rgba({{backgroundColors[musicIndex]}})">
-
-                </view>
+                <view style="font-size:30px;height:100%;background:rgba({{backgroundColors[musicIndex]}})"></view>
             </swiper-item>
         </block>
     </swiper>

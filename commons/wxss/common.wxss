@@ -38,4 +38,5 @@
     .statuBar{
         height:40px;
     }
+
 }

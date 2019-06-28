@@ -9,12 +9,15 @@ Page({
    * 页面的初始数据
    */
   data: {
+    baseURL:baseURL,
     musics: [],
     baseURL:baseURL,
     style: '',
     musicTitle:'',
     backgroundColors: ['187,255,255,0.3','255,255,240,0.3','233,150,122,0.3','191,239,255,0.3','155,48,255,0.3','193,205,205,0.3','255,255,224,0.3'],
-    musicInfo:{}
+    musicInfo:{},
+    isHideMusicList:true,
+    musicListStyle:''
   },
 
   /**
@@ -54,7 +57,7 @@ Page({
         },0)
       },
       deep:true
-    }
+    },
   },
   startPlay(){
     var musicInfo = this.data.musicInfo;
@@ -84,6 +87,19 @@ Page({
         musicTitle:musics[ev.detail.current].name,
         musicInfo: musics[ev.detail.current]
     })
+  },
+  showMusicList(){
+    this.setData({
+      musicListStyle: 'musicList-transition musicList-show',
+    })
+  },
+  closeMusiceList(){
+    this.setData({
+      musicListStyle: 'musicList-transition'
+    })
+  },
+  transitionEnd(){
+
   },
   /**
    * 生命周期函数--监听页面显示

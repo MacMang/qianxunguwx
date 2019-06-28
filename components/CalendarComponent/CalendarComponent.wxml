@@ -25,9 +25,6 @@
              <block wx:for="{{weeks}}" wx:for-index="weeksIndex" wx:for-item="days" >
                  <!-- 这是外层的swiper -->
                  <swiper-item style="display: flex;">
-                     <!-- 遍历 
-                        加动画
-                     -->
                     <view wx:for="{{days}}" class="day">
                        <view style="font-size:22rpx">{{weekDays[index]}}</view>
                         <view class="dateCircle" 
